@@ -93,8 +93,10 @@ const SingleCountry = () => {
       <p><b className="fw-bold text-primary">Currency  -  </b>{Object.values(country.currencies)[0].name}</p>
       <p><b className="fw-bold text-primary">Population  -  </b>{country.population}</p>
       <p><b className="fw-bold text-primary">Capital  -  </b>{country.capital}</p>
-      </Col>
+      <p><b className="fw-bold text-primary">Borders  -  </b>{country.borders}</p>
 
+      </Col>
+    
       <Col xs={12}>
        
         <hr />
