@@ -1,25 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Container, Row, Col } from 'react-bootstrap';
+import axios from 'axios';
+import NavBar from './components/NavBar';
+import Home from './pages/Home';
+import SingleCountry from './pages/SingleCountry';
 
-function App() {
+const App = () => {
+  const [countriesList, setCountriesList] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    // get the initial country list
+    const fetchCountries = async () => {
+      try {
+        const response = await axios.get('https://restcountries.com/v3.1/all');
+        setCountriesList(response.data);
+      } catch (error) {
+        console.error('Error fetching countries:', error);
+      }
+    };
+
+    fetchCountries();
+  }, []); // ensures this effect runs only once on component mount
+
+  const handleSearchChange = (value) => {
+    setSearchTerm(value);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Container>
+        <Row>
+          <Col>
+            <NavBar handleSearchChange={handleSearchChange} />
+            <Routes>
+              <Route
+                path="/"
+                element={<Home countriesList={countriesList} searchTerm={searchTerm} />}
+              />
+              <Route path="/country/:name" element={<SingleCountry />} />
+            </Routes>
+          </Col>
+        </Row>
+      </Container>
+    </Router>
   );
-}
+};
 
 export default App;
