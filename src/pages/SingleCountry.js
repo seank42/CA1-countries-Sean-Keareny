@@ -33,7 +33,7 @@ const SingleCountry = () => {
         const [latitude, longitude] = country.latlng;
 
         try {
-          const response = await axios.get(`http://api.weatherapi.com/v1/current.json?key=aadc597e51dd4018a99131322230211&q=${latitude},${longitude}&aqi=no`);
+          const response = await axios.get(`https://api.weatherapi.com/v1/current.json?key=aadc597e51dd4018a99131322230211&q=${latitude},${longitude}&aqi=no`);
           setWeather(response.data);
         } catch (error) {
           console.error('Error fetching weather:', error);
